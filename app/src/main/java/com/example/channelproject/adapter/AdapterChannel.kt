@@ -31,9 +31,8 @@ class AdapterChannel(var listChannel:List<Channel>, val listener: Listener): Rec
                 .into(logo)
 
             text.setOnClickListener {
-                //listener.onItemClickItemChannel(listGroup.get(position).name)
-            }
 
+            }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_channel, parent, false))
