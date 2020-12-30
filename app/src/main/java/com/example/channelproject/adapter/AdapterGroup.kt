@@ -13,7 +13,7 @@ class AdapterGroup(var listGroup:List<ChannelGroupModelItem>, val listener:Liste
     interface Listener{
         fun clickSelectGroup(item:List<Channel>)
     }
-    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView),View.OnClickListener {
+    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         var text = itemView.findViewById<TextView>(R.id.one)
         init{
@@ -26,13 +26,11 @@ class AdapterGroup(var listGroup:List<ChannelGroupModelItem>, val listener:Liste
 
         }
 
-        override fun onClick(v: View?) {
 
-        }
 
 
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_programm, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_group, parent, false))
     override fun getItemCount() = listGroup.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(listGroup[position])
 }

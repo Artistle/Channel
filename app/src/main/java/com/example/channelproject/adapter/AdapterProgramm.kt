@@ -14,7 +14,7 @@ class AdapterProgramm(var listProgramm:List<ListProgrammItem>, val listener:List
         fun clickSelectProgramm(nameChannel:String)
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         var text = itemView.findViewById<TextView>(R.id.text)
         init{
@@ -27,9 +27,7 @@ class AdapterProgramm(var listProgramm:List<ListProgrammItem>, val listener:List
             text.setText(item.name)
         }
 
-        override fun onClick(v: View?) {
 
-        }
 
 
     }

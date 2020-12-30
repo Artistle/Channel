@@ -15,7 +15,7 @@ class AdapterChannel(var listChannel:List<Channel>, val listener: Listener): Rec
         fun clickSelectChannel(selectChannel:Channel)
     }
 
-    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         var text = itemView.findViewById<TextView>(R.id.text1)
         var logo = itemView.findViewById<ImageView>(R.id.logo_image)
@@ -33,10 +33,6 @@ class AdapterChannel(var listChannel:List<Channel>, val listener: Listener): Rec
             text.setOnClickListener {
                 //listener.onItemClickItemChannel(listGroup.get(position).name)
             }
-
-        }
-
-        override fun onClick(v: View?) {
 
         }
     }

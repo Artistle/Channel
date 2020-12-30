@@ -17,7 +17,6 @@
 
         android:id="@+id/logo_text"
         android:gravity="center"
-        android:text="hello"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></TextView>
 
