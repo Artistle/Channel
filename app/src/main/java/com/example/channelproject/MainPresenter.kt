@@ -1,10 +1,14 @@
 package com.example.channelproject
 
+import android.content.Context
 import android.util.Log
+import android.view.View
 import androidx.annotation.NonNull
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.channelapp.model.channelGroupModel.ChannelGroupModel
 import com.example.channelapp.model.channelGroupModel.ChannelGroupModelItem
 import com.example.channelapp.model.listProgramm.ListProgramm
+import com.example.channelproject.animation.ProminentLayoutManager
 import com.example.channelproject.contract.MainContract
 import com.example.channelproject.model.api.ApiModule
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,6 +19,9 @@ class MainPresenter: MainContract.presenter {
 
     private lateinit var mView:MainContract.view
     private lateinit var mList:List<ChannelGroupModelItem>
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var layoutManagerChannel: LinearLayoutManager
+    private lateinit var layoutManagerProgramm: LinearLayoutManager
 
     constructor(mView:MainContract.view){
         this.mView = mView
@@ -26,6 +33,14 @@ class MainPresenter: MainContract.presenter {
         getObservableChannel(id)?.subscribeWith(getObserverChannel())
     }
 
+//    override fun attachLinearLayout(context: Context) {
+//        layoutManager = ProminentLayoutManager(context)
+//        layoutManagerChannel = ProminentLayoutManager(context)
+//        layoutManagerProgramm = ProminentLayoutManager(context)
+//
+//    }
+
+
     fun getObservableGroupModel(): io.reactivex.Observable<ChannelGroupModel>? {
         var apiModule = ApiModule()
         return apiModule.getChannelGroup().getGroupModel()
@@ -36,7 +51,7 @@ class MainPresenter: MainContract.presenter {
     fun getObserverGroupModel(): DisposableObserver<ChannelGroupModel?>? {
         return object : DisposableObserver<ChannelGroupModel?>() {
             override fun onNext(@NonNull listGroupModel: ChannelGroupModel) {
-                Log.d("TAG", "OnNext" + listGroupModel)
+                Log.d("TAG", "OnNext$listGroupModel")
                 mView.setAdapterGroupModel(listGroupModel)
             }
 
@@ -52,17 +67,17 @@ class MainPresenter: MainContract.presenter {
         }
     }
 
-    fun getObservableChannel(id:String): io.reactivex.Observable<ListProgramm>? {
+    private fun getObservableChannel(id:String): io.reactivex.Observable<ListProgramm>? {
         var apiModule = ApiModule()
         return apiModule.getListChannel().getListChannel(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getObserverChannel(): DisposableObserver<ListProgramm?>? {
+    private fun getObserverChannel(): DisposableObserver<ListProgramm?>? {
         return object : DisposableObserver<ListProgramm?>() {
             override fun onNext(@NonNull movieResponse: ListProgramm) {
-                Log.d("TAG", "OnNext" + movieResponse)
+                Log.d("TAG", "OnNext$movieResponse")
                 mView.setAdapterListProgramm(movieResponse)
             }
 

@@ -9,17 +9,17 @@ import com.example.channelapp.model.listProgramm.ListProgrammItem
 import com.example.channelproject.R
 
 class AdapterProgramm(var listProgramm:List<ListProgrammItem>, val listener:Listener): RecyclerView.Adapter<AdapterProgramm.ViewHolder>() {
-
     interface Listener{
         fun clickSelectProgramm(nameChannel:String)
     }
-
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         var text = itemView.findViewById<TextView>(R.id.text)
         init{
             text.setOnClickListener {
                 listener.clickSelectProgramm(listProgramm[position].name)
+                val rv = text.parent.parent as RecyclerView
+                rv.smoothScrollToCenteredPosition(position)
             }
         }
 

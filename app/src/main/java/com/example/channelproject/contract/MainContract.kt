@@ -1,5 +1,7 @@
 package com.example.channelproject.contract
 
+import android.content.Context
+import android.view.View
 import com.example.channelapp.model.channelGroupModel.Channel
 import com.example.channelapp.model.channelGroupModel.ChannelGroupModel
 import com.example.channelapp.model.channelGroupModel.ChannelGroupModelItem

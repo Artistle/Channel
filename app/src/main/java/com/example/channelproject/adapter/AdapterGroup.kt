@@ -11,26 +11,23 @@ import com.example.channelproject.R
 
 class AdapterGroup(var listGroup:List<ChannelGroupModelItem>, val listener:Listener): RecyclerView.Adapter<AdapterGroup.ViewHolder>() {
     interface Listener{
-        fun clickSelectGroup(item:List<Channel>)
+        fun clickSelectGroup(item:List<Channel>,itemView:View,position:Int)
     }
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-
         var text = itemView.findViewById<TextView>(R.id.one)
         init{
-            text.setOnClickListener {listener.clickSelectGroup(listGroup.get(position).channels)}
+            text.setOnClickListener {
+                listener.clickSelectGroup(listGroup.get(position).channels,itemView,position)
+                val rv = text.parent.parent as RecyclerView
+                rv.smoothScrollToCenteredPosition(position)
+            }
         }
-
         fun bind(item:ChannelGroupModelItem) = with(itemView){
-
             text.setText(item.name)
-
         }
-
-
-
-
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_group, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_group, parent, false))
     override fun getItemCount() = listGroup.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(listGroup[position])
 }
