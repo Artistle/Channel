@@ -23,12 +23,9 @@ class ProminentLayoutManager(context: Context,
         if(orientation == HORIZONTAL) scaleChildren()
     }
 
-    private val prominentThreshold = context.resources.getDimensionPixelSize(R.dimen.prominent_threshold)
-
     private fun scaleChildren() {
         val containerCenter = width / 2f
 
-        // Any view further than this threshold will be fully scaled down
         val scaleDistanceThreshold = minScaleDistanceFactor * containerCenter
 
         var translationXForward = 0f
@@ -52,11 +49,9 @@ class ProminentLayoutManager(context: Context,
             translationXForward = 0f
 
             if (translationXFromScale > 0 && i >= 1) {
-                // Edit previous child
                 getChildAt(i - 1)!!.translationX += 2 * translationXFromScale
 
             } else if (translationXFromScale < 0) {
-                // Pass on to next child
                 translationXForward = 2 * translationXFromScale
             }
         }

@@ -5,7 +5,6 @@ import android.graphics.Rect
 import android.view.View
 import androidx.annotation.Px
 import androidx.recyclerview.widget.RecyclerView
-import com.example.channelproject.R
 
 class LinearHorizontalSpacingDecoration(@Px private val innerSpacing:Int):RecyclerView.ItemDecoration() {
     @SuppressLint("ResourceAsColor")

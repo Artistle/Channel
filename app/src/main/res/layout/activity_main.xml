@@ -19,7 +19,7 @@
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <TextView
-
+        android:textColor="#000000"
         android:id="@+id/logo_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

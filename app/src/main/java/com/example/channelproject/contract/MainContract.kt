@@ -9,11 +9,11 @@ import com.example.channelapp.model.listProgramm.ListProgramm
 import com.example.channelapp.model.listProgramm.ListProgrammItem
 
 interface MainContract {
-    interface presenter{
-        fun onButtonWasClicked()
+    interface Presenter{
+        fun startApp()
         fun selectedChannel(id:String)
     }
-    interface view{
+    interface MainView{
         fun showText(message:String)
         fun setAdapterGroupModel(listGroup:ChannelGroupModel)
         fun setAdapterListProgramm(listProgramm:ListProgramm)

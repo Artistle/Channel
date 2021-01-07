@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.channelproject.R
 
 class OffsetDecoration:RecyclerView.ItemDecoration() {
     @SuppressLint("ResourceAsColor")

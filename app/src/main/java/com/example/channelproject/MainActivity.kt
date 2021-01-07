@@ -1,12 +1,9 @@
 package com.example.channelproject
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -15,7 +12,7 @@ import com.example.channelapp.model.channelGroupModel.ChannelGroupModel
 import com.example.channelapp.model.listProgramm.ListProgramm
 import com.example.channelproject.adapter.AdapterGroup
 import com.example.channelproject.adapter.AdapterChannel
-import com.example.channelproject.adapter.AdapterProgramm
+import com.example.channelproject.adapter.AdapterProgram
 import com.example.channelproject.animation.LinearHorizontalSpacingDecoration
 import com.example.channelproject.animation.OffsetDecoration
 import com.example.channelproject.animation.ProminentLayoutManager
@@ -25,20 +22,16 @@ import com.example.channelproject.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(),
     AdapterGroup.Listener,
     AdapterChannel.Listener,
-    AdapterProgramm.Listener,
-    MainContract.view {
+    AdapterProgram.Listener,
+    MainContract.MainView {
     private var adapterGroup: AdapterGroup? = null
     private var adapterChannel: AdapterChannel? = null
-    private var adapterProgram: AdapterProgramm? = null
+    private var adapterProgram: AdapterProgram? = null
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var layoutManagerChannel: LinearLayoutManager
     private lateinit var layoutManagerProgramm: LinearLayoutManager
-
-
-    private lateinit var mPresenter:MainContract.presenter
-
+    private lateinit var mPresenter:MainContract.Presenter
     private lateinit var snapHelper: SnapHelper
     private lateinit var snapHelperChannel: SnapHelper
     private lateinit var snapHelperProgramm: SnapHelper
@@ -64,25 +57,33 @@ class MainActivity : AppCompatActivity(),
             val spacing = resources.getDimensionPixelSize(R.dimen.carousel_spacing)
             addItemDecoration(LinearHorizontalSpacingDecoration(spacing))
             addItemDecoration(OffsetDecoration())
-
         }
         snapHelper.attachToRecyclerView(binding.recyclerGroup)
 
         with(binding.recyclerChannel){
             layoutManager = this@MainActivity.layoutManagerChannel
-
             val spacing = resources.getDimensionPixelSize(R.dimen.carousel_spacing)
             addItemDecoration(LinearHorizontalSpacingDecoration(spacing))
             addItemDecoration(OffsetDecoration())
         }
         snapHelperChannel.attachToRecyclerView(binding.recyclerChannel)
+
+        with(binding.recyclerProgram){
+            //layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL,true)
+            layoutManager = this@MainActivity.layoutManagerProgramm
+            val spacing = resources.getDimensionPixelSize(R.dimen.carousel_spacing)
+            addItemDecoration(LinearHorizontalSpacingDecoration(spacing))
+            addItemDecoration(OffsetDecoration())
+        }
+        snapHelperProgramm.attachToRecyclerView(binding.recyclerProgram)
+
         initRV()
     }
     private fun initRV(){
-        mPresenter.onButtonWasClicked()
+        mPresenter.startApp()
     }
 
-    override fun clickSelectGroup(item: List<Channel>, itemView: View,position:Int) {
+    override fun clickSelectGroup(item: List<Channel>) {
         binding.recyclerChannel.adapter = AdapterChannel(item,this@MainActivity)
     }
     override fun clickSelectChannel(selectChannel: Channel) {
@@ -90,11 +91,11 @@ class MainActivity : AppCompatActivity(),
         mPresenter.selectedChannel(selectChannel.id)
     }
 
-    override fun clickSelectProgramm(nameChannel: String) {
-        Toast.makeText(this,"Выбран канал: ${nameChannel}",Toast.LENGTH_SHORT).show()
+    override fun clickSelectProgram(nameChannel: String) {
+        Toast.makeText(this@MainActivity,"Выбран канал: $nameChannel",Toast.LENGTH_SHORT).show()
+
     }
     override fun showText(message: String) {
-
     }
 
     override fun setAdapterGroupModel(listGroup: ChannelGroupModel) {
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity(),
         binding.recyclerGroup.adapter = adapterGroup
     }
     override fun setAdapterListProgramm(listProgramm: ListProgramm) {
-        adapterProgram = AdapterProgramm(listProgramm,this)
+        adapterProgram = AdapterProgram(listProgramm,this)
         binding.recyclerProgram.adapter = adapterProgram
     }
 

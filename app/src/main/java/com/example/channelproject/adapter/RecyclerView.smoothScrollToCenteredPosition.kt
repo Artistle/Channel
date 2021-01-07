@@ -11,7 +11,6 @@ fun RecyclerView.smoothScrollToCenteredPosition(position: Int) {
                                               snapPref: Int): Int {
             val dxToStart = super.calculateDxToMakeVisible(view, SNAP_TO_START)
             val dxToEnd = super.calculateDxToMakeVisible(view, SNAP_TO_END)
-
             return (dxToStart + dxToEnd) / 2
         }
     }
